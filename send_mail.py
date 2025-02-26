@@ -7,9 +7,8 @@ import os
 
 def send_email_with_attachment(subject, body, to_emails, pdf_path):
 
-    from_email = "fymor6@gmail.com"  
-    password = "nneb tttl ntpi vvaw"  
-
+    from_email = "alerta2@apotiguar.com.br"  
+    password = "#Alerta2!"  
 
     msg = MIMEMultipart()
     msg['From'] = from_email
@@ -19,7 +18,6 @@ def send_email_with_attachment(subject, body, to_emails, pdf_path):
 
     msg['To'] = ", ".join(to_emails)
 
-
     part = MIMEBase('application', 'octet-stream')
     with open(pdf_path, 'rb') as attachment:
         part.set_payload(attachment.read())
@@ -27,9 +25,8 @@ def send_email_with_attachment(subject, body, to_emails, pdf_path):
     part.add_header('Content-Disposition', f'attachment; filename={os.path.basename(pdf_path)}')
     msg.attach(part)
 
-
     try:
-        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server = smtplib.SMTP('smtp.apotiguar.com.br', 587)
         server.starttls()  
         server.login(from_email, password)
         server.sendmail(from_email, to_emails, msg.as_string())
@@ -39,9 +36,3 @@ def send_email_with_attachment(subject, body, to_emails, pdf_path):
         print(f"Erro ao enviar o e-mail: {e}")
 
 
-send_email_with_attachment(
-    subject="Relatório PDF",
-    body="Segue em anexo o relatório solicitado.",
-    to_emails=["marcos.fernando@apotiguar.com.br", "lima@apotiguar.com.br", "luiz.costa@apotiguar.com.br"], 
-    pdf_path = "relatorio_notas_fiscais.pdf" 
-)
